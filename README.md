@@ -28,56 +28,59 @@ Projetado para ser resiliente e autônomo, o sistema inclui scripts de automaç�
 
 ## 📂 Estrutura do Projeto
 
-```text
-preco-monitor/
-│
-├── data/                   # Armazena o histórico (ignorada pelo Git)
-│   └── historico_precos.xlsx
-│
-├── src/                    # Módulos do Sistema
-│   ├── scraper.py          # Extração (Requests/BS4)
-│   ├── cleaner.py          # Limpeza e Padronização (Pandas)
-│   └── exporter.py         # Salvamento Inteligente (OpenPyXL)
-│
-├── config.py               # Configurações (URLs e Seletores CSS)
-├── executar.bat            # Script para automação no Windows
-├── main.py                 # Orquestrador principal
-├── requirements.txt        # Dependências
-└── README.md               # Documentação
+text
 
-🚀 Como Usar
+    preco-monitor/
+    │
+    ├── data/                   # Armazena o histórico (ignorada pelo Git)
+    │   └── historico_precos.xlsx
+    │
+    ├── src/                    # Módulos do Sistema
+    │   ├── scraper.py          # Extração (Requests/BS4)
+    │   ├── cleaner.py          # Limpeza e Padronização (Pandas)
+    │   └── exporter.py         # Salvamento Inteligente (OpenPyXL)
+    │
+    ├── config.py               # Configurações (URLs e Seletores CSS)
+    ├── executar.bat            # Script para automação no Windows
+    ├── main.py                 # Orquestrador principal
+    ├── requirements.txt        # Dependências
+    └── README.md               # Documentação
+
+## 🚀 Como Usar
 1. Instalação
 
 Clone o repositório e instale as dependências:
 Bash
 
-git clone [https://github.com/gabiRioRange/preco-monitor.git](https://github.com/gabiRioRange/preco-monitor.git)
-cd preco-monitor
-python -m venv .venv
+    git clone [https://github.com/gabiRioRange/preco-monitor.git](https://github.com/gabiRioRange/preco-monitor.git)
+    
+    cd preco-monitor
+    
+    python -m venv .venv
 # Ative a venv (Windows: .venv\Scripts\activate)
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 2. Configuração (config.py)
 
 Adicione os produtos que deseja monitorar no arquivo config.py. Você deve fornecer a URL e os Seletores CSS (Classes ou IDs) dos elementos da página:
 Python
 
-URLS_ALVO = [
-    {
-        "loja": "Mercado Livre",
-        "url": "https://...",
-        "seletor_nome": "h1.ui-pdp-title",
-        "seletor_preco": ".ui-pdp-price__second-line .fraction",
-        "seletor_preco_antigo": ".ui-pdp-price__original-value .fraction"
-    }
-]
+    URLS_ALVO = [
+        {
+            "loja": "Mercado Livre",
+            "url": "https://...",
+            "seletor_nome": "h1.ui-pdp-title",
+            "seletor_preco": ".ui-pdp-price__second-line .fraction",
+            "seletor_preco_antigo": ".ui-pdp-price__original-value .fraction"
+        }
+    ]
 
 3. Execução Manual
 
 Para rodar uma vez e testar:
 Bash
 
-python main.py
+    python main.py
 
 4. Agendamento Automático (Windows)
 
