@@ -1,0 +1,17 @@
+# .gitignore
+
+# Ignorar ambiente virtual
+venv/
+.env
+
+# Ignorar cache do Python
+__pycache__/
+*.pyc
+
+# Ignorar arquivos gerados (Excel e Logs)
+data/*.xlsx
+logs/*.log
+
+# Ignorar drivers de navegador (se houver)
+chromedriver.exe
+geckodriver
