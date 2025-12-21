@@ -1,6 +1,10 @@
 import pandas as pd
 import os
 from openpyxl import load_workbook
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import logger
 
 def salvar_excel(df, caminho_arquivo):
     """
@@ -8,7 +12,7 @@ def salvar_excel(df, caminho_arquivo):
     usando a lógica moderna do Pandas.
     """
     if df.empty:
-        print("⚠️ Sem dados para salvar.")
+        logger.warning("⚠️ Sem dados para salvar.")
         return
 
     # Cria diretório 'data' se não existir
@@ -19,7 +23,7 @@ def salvar_excel(df, caminho_arquivo):
     if not os.path.exists(caminho_arquivo):
         # Se não existe, cria novo normalmente
         df.to_excel(caminho_arquivo, index=False, engine='openpyxl')
-        print(f"✅ Arquivo criado: {caminho_arquivo}")
+        logger.info(f"✅ Arquivo criado: {caminho_arquivo}")
     else:
         # Se existe, precisamos descobrir onde termina a planilha atual
         try:
@@ -36,11 +40,11 @@ def salvar_excel(df, caminho_arquivo):
                 # Começando na linha logo abaixo da última (startrow=start_row)
                 df.to_excel(writer, index=False, header=False, startrow=start_row)
                 
-            print(f"✅ Dados adicionados ao arquivo existente: {caminho_arquivo}")
+            logger.info(f"✅ Dados adicionados ao arquivo existente: {caminho_arquivo}")
             
         except Exception as e:
-            print(f"❌ Erro ao tentar anexar dados: {e}")
+            logger.error(f"❌ Erro ao tentar anexar dados: {e}")
             # Backup de segurança caso dê erro no arquivo
             backup_name = caminho_arquivo.replace(".xlsx", "_novo.xlsx")
             df.to_excel(backup_name, index=False)
-            print(f"⚠️ Salvo em arquivo novo por segurança: {backup_name}")
+            logger.warning(f"⚠️ Salvo em arquivo novo por segurança: {backup_name}")

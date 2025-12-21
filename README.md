@@ -46,6 +46,14 @@ text
     ├── requirements.txt        # Dependências
     └── README.md               # Documentação
 
+## 🆕 Melhorias Recentes
+
+- **Logging Estruturado:** Logs salvos em `logs/preco_monitor.log` para rastreamento detalhado.
+- **Retry com Backoff:** Tentativas automáticas em caso de falha, com espera exponencial para evitar sobrecarga.
+- **Testes Unitários:** Cobertura básica com unittest em `tests/`.
+- **Configuração Flexível:** Exemplos comentados para Amazon e Magazine Luiza.
+- **Dashboard Web:** Interface simples com Streamlit para visualizar dados (`streamlit run dashboard.py`).
+
 ## 🚀 Como Usar
 1. Instalação
 
@@ -81,6 +89,16 @@ Para rodar uma vez e testar:
 Bash
 
     python main.py
+
+Para executar os testes:
+Bash
+
+    python -m unittest discover tests/
+
+Para visualizar o dashboard:
+Bash
+
+    streamlit run dashboard.py
 
 4. Agendamento Automático (Windows)
 

@@ -1,11 +1,11 @@
-from config import URLS_ALVO, ARQUIVO_SAIDA
+from config import URLS_ALVO, ARQUIVO_SAIDA, logger
 from src.scraper import obter_dados_produto
 from src.cleaner import limpar_dados
 from src.exporter import salvar_excel
 import time
 
 def main():
-    print("--- 🚀 Iniciando Monitoramento de Preços ---")
+    logger.info("--- 🚀 Iniciando Monitoramento de Preços ---")
     
     dados_coletados = []
     
@@ -19,26 +19,26 @@ def main():
             
     # 2. Limpeza (ETL)
     if dados_coletados:
-        print("🧹 Limpando e estruturando dados...")
+        logger.info("🧹 Limpando e estruturando dados...")
         df_limpo = limpar_dados(dados_coletados)
         
         # Mostra prévia no console (CORRIGIDO AQUI: Preço Atual)
-        print("\nPrévia dos dados:")
+        logger.info("\nPrévia dos dados:")
         try:
             # Tenta mostrar as colunas novas
-            print(df_limpo[['Produto', 'Preço Atual']].head())
+            logger.info(str(df_limpo[['Produto', 'Preço Atual']].head()))
         except KeyError:
             # Se der erro, mostra tudo o que tem
-            print(df_limpo.head())
+            logger.info(str(df_limpo.head()))
         
         # 3. Exportação
-        print(f"\n💾 Salvando em {ARQUIVO_SAIDA}...")
+        logger.info(f"\n💾 Salvando em {ARQUIVO_SAIDA}...")
         salvar_excel(df_limpo, ARQUIVO_SAIDA)
         
     else:
-        print("⚠️ Nenhum dado foi coletado. Verifique os seletores ou a conexão.")
+        logger.warning("⚠️ Nenhum dado foi coletado. Verifique os seletores ou a conexão.")
 
-    print("--- ✅ Processo Finalizado ---")
+    logger.info("--- ✅ Processo Finalizado ---")
 
 if __name__ == "__main__":
     main()

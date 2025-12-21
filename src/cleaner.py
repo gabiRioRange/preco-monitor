@@ -1,11 +1,18 @@
 import pandas as pd
 import re
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import logger
 
 def limpar_dados(lista_dados):
     if not lista_dados:
+        logger.warning("Lista de dados vazia.")
         return pd.DataFrame()
 
     df = pd.DataFrame(lista_dados)
+    logger.info(f"Dados brutos: {len(df)} linhas")
 
     def tratar_preco(preco_str):
         if isinstance(preco_str, (int, float)):
@@ -19,6 +26,8 @@ def limpar_dados(lista_dados):
     # Aplica a limpeza nas duas colunas
     df['Preço Atual'] = df['Preço Atual Bruto'].apply(tratar_preco)
     df['Preço Antigo'] = df['Preço Antigo Bruto'].apply(tratar_preco)
+    
+    logger.info("Limpeza de preços aplicada.")
     
     # Organiza a ordem final das colunas
     colunas_finais = [
